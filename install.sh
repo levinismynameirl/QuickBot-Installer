@@ -251,13 +251,22 @@ setup_directories() {
     
     # Create scripts directory if it doesn't exist
     mkdir -p scripts
+    mkdir -p scripts/unused
     
     # Move installer scripts into scripts/ directory
     log_info "Organizing scripts..."
-    for script in install.sh uninstall.sh updater.sh brewinstall.sh; do
+    for script in uninstall.sh updater.sh; do
         if [[ -f "$script" ]] && [[ ! -f "scripts/$script" ]]; then
             cp "$script" "scripts/$script"
             chmod +x "scripts/$script"
+        fi
+    done
+    
+    # Move one-time-use scripts to unused/ folder
+    log_info "Archiving installation files..."
+    for file in install.sh brewinstall.sh "QuickBot Installer.app"; do
+        if [[ -e "$file" ]]; then
+            cp -r "$file" "scripts/unused/"
         fi
     done
     

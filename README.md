@@ -104,9 +104,12 @@ After installation:
 └── quickbot/
     ├── .env
     └── scripts/
-        ├── installer.sh
         ├── updater.sh
-        └── uninstall.sh
+        ├── uninstall.sh
+        └── unused/
+            ├── install.sh
+            ├── brewinstall.sh
+            └── QuickBot Installer.app
 
 ~/.config/.quickbot/
 └── quickbot/
