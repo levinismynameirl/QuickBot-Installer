@@ -90,6 +90,7 @@ confirm() {
 # Log to file
 log_to_file() {
     local log_file="$QUICKBOT_LOG_DIR/install.log"
+    mkdir -p "$QUICKBOT_LOG_DIR" 2>/dev/null || true
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$log_file" 2>/dev/null || true
 }
 
@@ -342,11 +343,41 @@ download_latest_release() {
         # Get latest release info
         local release_info=$(curl -s --connect-timeout 30 "https://api.github.com/repos/$QUICKBOT_GITHUB_REPO/releases/latest" 2>&1)
         
-        if [[ $? -eq 0 ]]; then
+        if [[ $? -eq 0 ]] && [[ ! "$release_info" =~ "Not Found" ]]; then
             version=$(echo "$release_info" | grep '"tag_name"' | head -1 | sed 's/.*"v\?\([^"]*\)".*/\1/')
             
-            # Try to get wheel file first, then tarball
+            # Try to get wheel file from assets first
             download_url=$(echo "$release_info" | grep 'browser_download_url' | grep '\.whl' | head -1 | cut -d'"' -f4)
+            
+            # If no wheel, try tarball from assets
+            if [[ -z "$download_url" ]]; then
+                download_url=$(echo "$release_info" | grep 'browser_download_url' | grep '\.tar\.gz' | head -1 | cut -d'"' -f4)
+            fi
+            
+            # If still no download, use the automatic tarball_url
+            if [[ -z "$download_url" ]]; then
+                download_url=$(echo "$release_info" | grep '"tarball_url"' | head -1 | cut -d'"' -f4)
+            fi
+            
+            if [[ -n "$download_url" ]] && [[ -n "$version" ]]; then
+                break
+            fi
+        fi
+        
+        retry_count=$((retry_count + 1))
+        if [[ $retry_count -lt $max_retries ]]; then
+            log_warn "Failed to fetch release info, retrying... ($retry_count/$max_retries)"
+            sleep 2
+        fi
+    done
+    
+    # If no release found, install directly from GitHub
+    if [[ -z "$download_url" ]]; then
+        log_warn "No release found, installing from main branch..."
+        echo "git+https://github.com/$QUICKBOT_GITHUB_REPO.git"
+        log_to_file "No release found, will install from main branch"
+        return 0
+    fi
             
             if [[ -z "$download_url" ]]; then
                 download_url=$(echo "$release_info" | grep 'browser_download_url' | grep '\.tar\.gz' | head -1 | cut -d'"' -f4)
@@ -363,12 +394,6 @@ download_latest_release() {
             sleep 2
         fi
     done
-    
-    if [[ -z "$download_url" ]]; then
-        log_error "Failed to fetch latest release information from GitHub"
-        rollback_installation
-        exit 1
-    fi
     
     log_info "Latest version: $version"
     
@@ -403,6 +428,16 @@ download_latest_release() {
     log_error "Failed to download QuickBot after $max_retries attempts"
     rollback_installation
     exit 1
+}        retry_count=$((retry_count + 1))
+        if [[ $retry_count -lt $max_retries ]]; then
+            log_warn "Download failed, retrying... ($retry_count/$max_retries)"
+            sleep 2
+        fi
+    done
+    
+    log_error "Failed to download QuickBot after $max_retries attempts"
+    rollback_installation
+    exit 1
 }
 
 # Install QuickBot via pipx
@@ -417,8 +452,16 @@ install_quickbot() {
         exit 1
     fi
     
-    # Install with pipx
+    # Install with pipx (handle both file paths and git URLs)
+    log_info "Running pipx install..."
     if pipx install "$package_path" --force 2>&1 | tee -a "$QUICKBOT_LOG_DIR/install.log"; then
+        log_success "QuickBot installed to pipx"
+        log_to_file "Installed QuickBot via pipx"
+    else
+        log_error "Failed to install QuickBot via pipx"
+        rollback_installation
+        exit 1
+    fi
         log_success "QuickBot installed to pipx"
         log_to_file "Installed QuickBot via pipx"
     else
