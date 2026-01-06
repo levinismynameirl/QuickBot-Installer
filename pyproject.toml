@@ -1,6 +1,6 @@
 [project]
 name = "quickbot-installers"
-version = "1.0.0"
+version = "2.0.1"
 description = "Installation scripts for QuickBot"
 authors = [
     {name = "Levin", email = "levinismynameirl@users.noreply.github.com"}
