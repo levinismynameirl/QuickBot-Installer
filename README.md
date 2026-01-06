@@ -4,27 +4,25 @@ Official installation scripts for [QuickBot](https://github.com/levinismynameirl
 
 ## Quick Start
 
-### Method 1: macOS Installer Package (Easiest)
+### One-Line Installation
 
-1. Download `QuickBot-Installer.pkg` from [GitHub Releases](https://github.com/levinismynameirl/QuickBot-Installer/releases)
-2. **Double-click the .pkg file**
-3. Follow the installation wizard
-4. Done! ✨
-
-The installer handles everything automatically - no Terminal commands needed.
-
-### Method 2: One-Line Command
-
-Copy and paste this into your Terminal:
+**Just paste this into Terminal and press Enter:**
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/levinismynameirl/QuickBot-Installer/main/install.sh | bash
 ```
 
-### Method 3: Manual Download
+That's it! No downloads, no files, no extra steps. The command automatically:
+- Downloads the installer from GitHub
+- Checks and installs dependencies (Homebrew, Python, pipx)
+- Installs QuickBot via pipx
+- Sets up the `quick` command globally
 
-```bash
-### Method 3: Manual Download
+✨ **No GitHub download, no cd, no chmod - just one command.**
+
+### Alternative: Download and Run
+
+If you prefer to review the script first:
 
 ```bash
 # Download the installer
@@ -40,7 +38,7 @@ cd quickbot-installer-main
 chmod +x install.sh && ./install.sh
 ```
 
-### Method 4: Homebrew (Coming Soon)
+### Homebrew (Coming Soon)
 
 ```bash
 brew tap levinismynameirl/quickbot
