@@ -4,7 +4,22 @@ Official installation scripts for [QuickBot](https://github.com/levinismynameirl
 
 ## Quick Start
 
-### Download and Install
+### Method 1: One-Click Installer (Easiest)
+
+1. Download the latest release from [GitHub Releases](https://github.com/levinismynameirl/QuickBot-Installers/releases)
+2. Extract the zip file
+3. **Double-click `QuickBot Installer.app`**
+4. Follow the prompts in the terminal
+
+The .app will automatically handle permissions and run the installer for you.
+
+### Method 2: One-Line Command
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/levinismynameirl/QuickBot-Installers/main/install.sh | bash
+```
+
+### Method 3: Manual Installation
 
 ```bash
 # Download the installer
@@ -16,14 +31,11 @@ unzip quickbot-installer.zip
 # Navigate to the directory
 cd quickbot-installers-main
 
-# Make the installer executable
-chmod +x install.sh
-
-# Run the installer
-./install.sh
+# Make the installer executable and run it
+chmod +x install.sh && ./install.sh
 ```
 
-### Via Homebrew (Coming Soon)
+### Method 4: Homebrew (Coming Soon)
 
 ```bash
 brew tap levinismynameirl/quickbot
@@ -147,7 +159,9 @@ Or reinstall from scratch:
 ## Contributing
 
 Issues and pull requests welcome at:
+
 - Installer: https://github.com/levinismynameirl/QuickBot-Installers
+
 - QuickBot: https://github.com/levinismynameirl/Quick-Bot
 
 ## License

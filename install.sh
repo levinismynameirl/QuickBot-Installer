@@ -234,19 +234,19 @@ setup_directories() {
     local current_dir=$(basename "$PWD")
     local parent_dir=$(dirname "$PWD")
     
-    # Rename current directory to 'quickbot' if not already named so
-    if [[ "$current_dir" != "quickbot" ]]; then
-        log_info "Renaming directory from '$current_dir' to 'quickbot'..."
-        local new_dir="$parent_dir/quickbot"
+    # Rename current directory to '.quickbot' if not already named so
+    if [[ "$current_dir" != ".quickbot" ]]; then
+        log_info "Renaming directory from '$current_dir' to '.quickbot'..."
+        local new_dir="$parent_dir/.quickbot"
         
         # If target exists, use a temporary name
         if [[ -d "$new_dir" ]]; then
-            new_dir="$parent_dir/quickbot.tmp.$$"
+            new_dir="$parent_dir/.quickbot.tmp.$$"
         fi
         
         mv "$PWD" "$new_dir"
         cd "$new_dir"
-        log_success "Directory renamed to 'quickbot'"
+        log_success "Directory renamed to '.quickbot'"
     fi
     
     # Create scripts directory if it doesn't exist
