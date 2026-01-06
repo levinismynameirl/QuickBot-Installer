@@ -4,34 +4,39 @@ Official installation scripts for [QuickBot](https://github.com/levinismynameirl
 
 ## Quick Start
 
-### Method 1: One-Click Installer (Easiest)
+### Method 1: macOS Installer Package (Easiest)
 
-1. Download the latest release from [GitHub Releases](https://github.com/levinismynameirl/QuickBot-Installers/releases)
-2. Extract the zip file
-3. **Double-click `QuickBot Installer.app`**
-4. Follow the prompts in the terminal
+1. Download `QuickBot-Installer.pkg` from [GitHub Releases](https://github.com/levinismynameirl/QuickBot-Installer/releases)
+2. **Double-click the .pkg file**
+3. Follow the installation wizard
+4. Done! ✨
 
-The .app will automatically handle permissions and run the installer for you.
+The installer handles everything automatically - no Terminal commands needed.
 
 ### Method 2: One-Line Command
 
+Copy and paste this into your Terminal:
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/levinismynameirl/QuickBot-Installers/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/levinismynameirl/QuickBot-Installer/main/install.sh | bash
 ```
 
-### Method 3: Manual Installation
+### Method 3: Manual Download
+
+```bash
+### Method 3: Manual Download
 
 ```bash
 # Download the installer
-curl -fL https://github.com/levinismynameirl/QuickBot-Installers/archive/main.zip -o quickbot-installer.zip
+curl -fL https://github.com/levinismynameirl/QuickBot-Installer/archive/main.zip -o quickbot-installer.zip
 
 # Extract
 unzip quickbot-installer.zip
 
 # Navigate to the directory
-cd quickbot-installers-main
+cd quickbot-installer-main
 
-# Make the installer executable and run it
+# Make executable and run
 chmod +x install.sh && ./install.sh
 ```
 

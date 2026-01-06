@@ -3,20 +3,19 @@ QuickBot Installation Instructions
 
 Welcome to QuickBot!
 
-EASIEST METHOD:
----------------
-Double-click "QuickBot Installer.app" and follow the prompts.
+EASIEST METHOD (RECOMMENDED):
+------------------------------
+Copy and paste this into Terminal:
+
+    curl -fsSL https://raw.githubusercontent.com/levinismynameirl/QuickBot-Installer/main/install.sh | bash
+
 
 ALTERNATIVE METHOD:
 -------------------
-Run these commands in Terminal:
+If you downloaded the zip file, run these commands in Terminal:
 
     chmod +x install.sh
     ./install.sh
-
-ONE-LINE INSTALLATION:
-----------------------
-    curl -fsSL https://raw.githubusercontent.com/levinismynameirl/QuickBot-Installers/main/install.sh | bash
 
 The installer will:
   1. Check your system for required dependencies (Python 3.11+, Homebrew, pipx)
