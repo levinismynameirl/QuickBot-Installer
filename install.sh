@@ -436,13 +436,6 @@ install_quickbot() {
         rollback_installation
         exit 1
     fi
-        log_success "QuickBot installed to pipx"
-        log_to_file "Installed QuickBot via pipx"
-    else
-        log_error "Failed to install QuickBot via pipx"
-        rollback_installation
-        exit 1
-    fi
     
     # Copy .env to pipx venv
     log_info "Copying .env to pipx environment..."
