@@ -344,7 +344,7 @@ download_latest_release() {
         local release_info=$(curl -s --connect-timeout 30 "https://api.github.com/repos/$QUICKBOT_GITHUB_REPO/releases/latest" 2>&1)
         
         if [[ $? -eq 0 ]] && [[ ! "$release_info" =~ "Not Found" ]]; then
-            version=$(echo "$release_info" | grep '"tag_name"' | head -1 | sed 's/.*"v\?\([^"]*\)".*/\1/')
+            version=$(echo "$release_info" | grep '"tag_name"' | head -1 | sed -E 's/.*"tag_name"[[:space:]]*:[[:space:]]*"v?([^"]+)".*/\1/')
             
             # Try to get wheel file from assets first
             download_url=$(echo "$release_info" | grep 'browser_download_url' | grep '\.whl' | head -1 | cut -d'"' -f4)
@@ -389,6 +389,10 @@ download_latest_release() {
     
     # Download the release
     local filename=$(basename "$download_url")
+    # If using tarball_url (no extension), add .tar.gz
+    if [[ ! "$filename" =~ \.(whl|tar\.gz|zip)$ ]]; then
+        filename="quickbot-${version}.tar.gz"
+    fi
     local download_path="/tmp/$filename"
     
     log_info "Downloading $filename..." >&2
