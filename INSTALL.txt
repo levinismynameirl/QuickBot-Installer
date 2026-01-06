@@ -1,0 +1,41 @@
+QuickBot Installation Instructions
+====================================
+
+Welcome to QuickBot!
+
+To install QuickBot, simply run:
+
+    
+    chmod +x install.sh
+    ./install.sh
+
+The installer will:
+  1. Check your system for required dependencies (Python 3.11+, Homebrew, pipx)
+  2. Install any missing dependencies (with your confirmation)
+  3. Set up QuickBot in your home directory (~/.quickbot)
+  4. Download and install the latest version from GitHub
+  5. Create the 'quick' and 'qw' commands for global use
+
+After installation, you can start using QuickBot by typing:
+
+    quick help
+
+For updates, run:
+
+    quick update
+
+or use the updater script directly:
+
+    ~/.quickbot/quickbot/scripts/updater.sh
+
+To uninstall:
+
+    ~/.quickbot/quickbot/scripts/uninstall.sh
+
+---
+
+Requirements:
+- macOS (Intel or Apple Silicon)
+- Internet connection for downloading QuickBot
+
+Questions or issues? Visit: https://github.com/levinismynameirl/Quick-Bot

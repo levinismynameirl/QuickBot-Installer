@@ -1,0 +1,20 @@
+[project]
+name = "quickbot-installers"
+version = "1.0.0"
+description = "Installation scripts for QuickBot"
+authors = [
+    {name = "Levin", email = "levinismynameirl@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[project.urls]
+Homepage = "https://github.com/levinismynameirl/QuickBot-Installers"
+Repository = "https://github.com/levinismynameirl/QuickBot-Installers"
+Issues = "https://github.com/levinismynameirl/QuickBot-Installers/issues"
+QuickBot = "https://github.com/levinismynameirl/Quick-Bot"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
