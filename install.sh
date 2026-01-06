@@ -230,33 +230,51 @@ backup_existing() {
 setup_directories() {
     log_info "Setting up directory structure..."
     
-    # Get the current directory name
-    local current_dir=$(basename "$PWD")
-    local parent_dir=$(dirname "$PWD")
+    # Check if we're in the installer directory by looking for all required files
+    local has_all_files=true
+    for required_file in uninstall.sh updater.sh pyproject.toml; do
+        if [[ ! -f "$required_file" ]]; then
+            has_all_files=false
+            break
+        fi
+    done
     
-    # Rename current directory to '.quickbotScripts' if not already named so
-    if [[ "$current_dir" != ".quickbotScripts" ]]; then
-        log_info "Renaming directory from '$current_dir' to '.quickbotScripts'..."
-        local new_dir="$parent_dir/.quickbotScripts"
+    # If we don't have all files, we're running from curl | bash
+    if [[ "$has_all_files" == "false" ]]; then
+        log_info "Downloading installer files..."
+        local temp_dir=$(mktemp -d)
+        cd "$temp_dir"
         
-        # If target exists, use a temporary name
-        if [[ -d "$new_dir" ]]; then
-            new_dir="$parent_dir/.quickbotScripts.tmp.$$"
+        if ! curl -fsSL "https://github.com/levinismynameirl/QuickBot-Installer/archive/main.zip" -o installer.zip; then
+            log_error "Failed to download installer files"
+            exit 1
         fi
         
-        mv "$PWD" "$new_dir"
-        cd "$new_dir"
-        log_success "Directory renamed to '.quickbotScripts'"
+        unzip -q installer.zip
+        cd QuickBot-Installer-main 2>/dev/null || cd quickbot-installer-main 2>/dev/null || {
+            log_error "Failed to extract installer files"
+            exit 1
+        }
+        log_success "Downloaded installer files"
     fi
     
-    # Create scripts directory if it doesn't exist
+    # Now we're definitely in the installer directory
+    # Create a working directory for final installation
+    local working_dir=$(mktemp -d -t quickbot-install)
+    
+    # Copy all files to working directory
+    log_info "Preparing installation files..."
+    cp -r . "$working_dir/"
+    cd "$working_dir"
+    
+    # Create scripts directory structure
     mkdir -p scripts
     mkdir -p scripts/unused
     
     # Move installer scripts into scripts/ directory
     log_info "Organizing scripts..."
     for script in uninstall.sh updater.sh; do
-        if [[ -f "$script" ]] && [[ ! -f "scripts/$script" ]]; then
+        if [[ -f "$script" ]]; then
             cp "$script" "scripts/$script"
             chmod +x "scripts/$script"
         fi
@@ -266,18 +284,18 @@ setup_directories() {
     log_info "Archiving installation files..."
     for file in install.sh brewinstall.sh "QuickBot Installer.app"; do
         if [[ -e "$file" ]]; then
-            cp -r "$file" "scripts/unused/"
+            cp -r "$file" "scripts/unused/" 2>/dev/null || true
         fi
     done
     
     # Backup existing QuickBot installation if present
     backup_existing
     
-    # Move the entire quickbot folder to ~/.quickbotScripts/
+    # Move the working directory to final location
     log_info "Moving QuickBot to $QUICKBOT_HOME..."
     # Ensure parent directory exists (may have been removed during backup)
     mkdir -p "$QUICKBOT_HOME"
-    mv "$PWD" "$QUICKBOT_HOME/quickbot"
+    mv "$working_dir" "$QUICKBOT_HOME/quickbot"
     cd "$QUICKBOT_HOME/quickbot"
     
     # Create config directory structure
