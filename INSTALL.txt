@@ -21,7 +21,7 @@ ONE-LINE INSTALLATION:
 The installer will:
   1. Check your system for required dependencies (Python 3.11+, Homebrew, pipx)
   2. Install any missing dependencies (with your confirmation)
-  3. Set up QuickBot in your home directory (~/.quickbot)
+  3. Set up QuickBot in your home directory (~/.quickbotScripts)
   4. Download and install the latest version from GitHub
   5. Create the 'quick' and 'qw' commands for global use
 
@@ -35,11 +35,11 @@ For updates, run:
 
 or use the updater script directly:
 
-    ~/.quickbot/quickbot/scripts/updater.sh
+    ~/.quickbotScripts/quickbot/scripts/updater.sh
 
 To uninstall:
 
-    ~/.quickbot/quickbot/scripts/uninstall.sh
+    ~/.quickbotScripts/quickbot/scripts/uninstall.sh
 
 ---
 

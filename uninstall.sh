@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-QUICKBOT_HOME="$HOME/.quickbot"
+QUICKBOT_HOME="$HOME/.quickbotScripts"
 QUICKBOT_CONFIG_BASE="$HOME/.config/.quickbot"
 QUICKBOT_ENV_FILE="$QUICKBOT_HOME/quickbot/.env"
 LOCAL_BIN="$HOME/.local/bin"

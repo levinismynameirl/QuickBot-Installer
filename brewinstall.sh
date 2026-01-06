@@ -19,7 +19,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 QUICKBOT_GITHUB_REPO="levinismynameirl/Quick-Bot"
-QUICKBOT_HOME="$HOME/.quickbot"
+QUICKBOT_HOME="$HOME/.quickbotScripts"
 QUICKBOT_CONFIG_BASE="$HOME/.config/.quickbot"
 QUICKBOT_SCRIPTS_DIR="$QUICKBOT_HOME/quickbot/scripts"
 QUICKBOT_CONFIG_DIR="$QUICKBOT_CONFIG_BASE/quickbot/data/.config/configFiles"
@@ -114,19 +114,19 @@ setup_directories() {
     local current_dir=$(basename "$PWD")
     local parent_dir=$(dirname "$PWD")
     
-    # Rename current directory to '.quickbot' if not already named so
-    if [[ "$current_dir" != ".quickbot" ]]; then
-        log_info "Renaming directory from '$current_dir' to '.quickbot'..."
-        local new_dir="$parent_dir/.quickbot"
+    # Rename current directory to '.quickbotScripts' if not already named so
+    if [[ "$current_dir" != ".quickbotScripts" ]]; then
+        log_info "Renaming directory from '$current_dir' to '.quickbotScripts'..."
+        local new_dir="$parent_dir/.quickbotScripts"
         
         # If target exists, use a temporary name
         if [[ -d "$new_dir" ]]; then
-            new_dir="$parent_dir/.quickbot.tmp.$$"
+            new_dir="$parent_dir/.quickbotScripts.tmp.$$"
         fi
         
         mv "$PWD" "$new_dir" || error_exit "Failed to rename directory"
         cd "$new_dir"
-        log_success "Directory renamed to '.quickbot'"
+        log_success "Directory renamed to '.quickbotScripts'"
     fi
     
     # Create scripts directory if it doesn't exist
@@ -158,9 +158,10 @@ setup_directories() {
         log_success "Backup created"
     fi
     
-    # Move the entire quickbot folder to ~/.quickbot/
+    # Move the entire quickbot folder to ~/.quickbotScripts/
     log_info "Moving QuickBot to $QUICKBOT_HOME..."
-    mkdir -p "$(dirname "$QUICKBOT_HOME")" || error_exit "Failed to create parent directory"
+    # Ensure parent directory exists (may have been removed during backup)
+    mkdir -p "$QUICKBOT_HOME" || error_exit "Failed to create QuickBot home directory"
     mv "$PWD" "$QUICKBOT_HOME/quickbot" || error_exit "Failed to move QuickBot directory"
     cd "$QUICKBOT_HOME/quickbot"
     

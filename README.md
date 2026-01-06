@@ -44,7 +44,7 @@ brew install quickbot
 
 ## What Gets Installed
 
-- **Scripts**: `~/.quickbot/quickbot/scripts/`
+- **Scripts**: `~/.quickbotScripts/quickbot/scripts/`
   - Installer, updater, and uninstaller scripts
 - **Configuration**: `~/.config/.quickbot/quickbot/data/.config/configFiles/`
   - Config files created by QuickBot CLI
@@ -100,7 +100,7 @@ Non-interactive installer for Homebrew tap installation. Called automatically by
 After installation:
 
 ```
-~/.quickbot/
+~/.quickbotScripts/
 └── quickbot/
     ├── .env
     └── scripts/
