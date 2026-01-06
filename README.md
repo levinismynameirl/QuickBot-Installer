@@ -18,6 +18,8 @@ That's it! No downloads, no files, no extra steps. The command automatically:
 - Installs QuickBot via pipx
 - Sets up the `quick` command globally
 
+  (if you get permissions errors then reopen the terminal with admin privileges)
+
 ✨ **No GitHub download, no cd, no chmod - just one command.**
 
 ### Alternative: Download and Run
