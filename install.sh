@@ -332,7 +332,7 @@ EOF
 
 # Download latest release from GitHub
 download_latest_release() {
-    log_info "Fetching latest QuickBot release from GitHub..."
+    log_info "Fetching latest QuickBot release from GitHub..." >&2
     
     local max_retries=3
     local retry_count=0
@@ -366,39 +366,23 @@ download_latest_release() {
         
         retry_count=$((retry_count + 1))
         if [[ $retry_count -lt $max_retries ]]; then
-            log_warn "Failed to fetch release info, retrying... ($retry_count/$max_retries)"
+            log_warn "Failed to fetch release info, retrying... ($retry_count/$max_retries)" >&2
             sleep 2
         fi
     done
     
     # If no release found, install directly from GitHub
     if [[ -z "$download_url" ]]; then
-        log_warn "No release found, installing from main branch..."
+        log_warn "No release found, installing from main branch..." >&2
         echo "git+https://github.com/$QUICKBOT_GITHUB_REPO.git"
         log_to_file "No release found, will install from main branch"
         return 0
     fi
-            
-            if [[ -z "$download_url" ]]; then
-                download_url=$(echo "$release_info" | grep 'browser_download_url' | grep '\.tar\.gz' | head -1 | cut -d'"' -f4)
-            fi
-            
-            if [[ -n "$download_url" ]] && [[ -n "$version" ]]; then
-                break
-            fi
-        fi
-        
-        retry_count=$((retry_count + 1))
-        if [[ $retry_count -lt $max_retries ]]; then
-            log_warn "Failed to fetch release info, retrying... ($retry_count/$max_retries)"
-            sleep 2
-        fi
-    done
     
-    log_info "Latest version: $version"
+    log_info "Latest version: $version" >&2
     
     if ! confirm "Download QuickBot $version from GitHub?" "Y"; then
-        log_error "Installation cancelled by user"
+        log_error "Installation cancelled by user" >&2
         rollback_installation
         exit 1
     fi
@@ -407,12 +391,12 @@ download_latest_release() {
     local filename=$(basename "$download_url")
     local download_path="/tmp/$filename"
     
-    log_info "Downloading $filename..."
+    log_info "Downloading $filename..." >&2
     retry_count=0
     
     while [[ $retry_count -lt $max_retries ]]; do
-        if curl -fL --progress-bar --connect-timeout 30 "$download_url" -o "$download_path"; then
-            log_success "Downloaded successfully"
+        if curl -fL --progress-bar --connect-timeout 30 "$download_url" -o "$download_path" 2>&2; then
+            log_success "Downloaded successfully" >&2
             echo "$download_path"
             log_to_file "Downloaded QuickBot $version from $download_url"
             return 0
@@ -420,22 +404,12 @@ download_latest_release() {
         
         retry_count=$((retry_count + 1))
         if [[ $retry_count -lt $max_retries ]]; then
-            log_warn "Download failed, retrying... ($retry_count/$max_retries)"
+            log_warn "Download failed, retrying... ($retry_count/$max_retries)" >&2
             sleep 2
         fi
     done
     
-    log_error "Failed to download QuickBot after $max_retries attempts"
-    rollback_installation
-    exit 1
-}        retry_count=$((retry_count + 1))
-        if [[ $retry_count -lt $max_retries ]]; then
-            log_warn "Download failed, retrying... ($retry_count/$max_retries)"
-            sleep 2
-        fi
-    done
-    
-    log_error "Failed to download QuickBot after $max_retries attempts"
+    log_error "Failed to download QuickBot after $max_retries attempts" >&2
     rollback_installation
     exit 1
 }
