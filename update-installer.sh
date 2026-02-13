@@ -325,7 +325,7 @@ cleanup_old_backups() {
 main() {
     echo ""
     echo "╔════════════════════════════════════════╗"
-    echo "║   QuickBot Installer Updater v0.1.0d   ║"
+    echo "║ QuickBot Installer Updater v0.1.0.dev0 ║"
     echo "╚════════════════════════════════════════╝"
     echo ""
     echo -e "${YELLOW}⚠  Development Beta — first public build of QuickBot.${NC}"

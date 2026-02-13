@@ -3,7 +3,7 @@ QuickBot Installation Instructions
 
 Welcome to QuickBot!
 
-⚠  DEVELOPMENT BETA (v0.1.0d)
+⚠  DEVELOPMENT BETA (v0.1.0.dev0)
 This is the first public release of QuickBot. This version is a development
 build — features may be incomplete, config file formats may change between
 releases, and things may break. Please report issues at:

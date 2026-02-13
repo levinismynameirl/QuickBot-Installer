@@ -288,10 +288,10 @@ cleanup_path() {
 main() {
     echo ""
     echo "╔════════════════════════════════════════╗"
-    echo "║      QuickBot Uninstaller v0.1.0d      ║"
+    echo "║    QuickBot Uninstaller v0.1.0.dev0   ║"
     echo "╚════════════════════════════════════════╝"
     echo ""
-    echo -e "${YELLOW}⚠  Development Beta — this will remove QuickBot v0.1.0d.${NC}"
+    echo -e "${YELLOW}⚠  Development Beta — this will remove QuickBot v0.1.0.dev0.${NC}"
     echo ""
     
     check_installation

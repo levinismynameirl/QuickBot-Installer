@@ -144,20 +144,20 @@ check_installation() {
     log_success "QuickBot installation found (version: $QUICKBOT_VERSION)"
 }
 
-# Check if a version string is a development build (ends with 'd')
+# Check if a version string is a development build (contains '.dev')
 is_dev_build() {
     local ver="${1#v}"
-    [[ "$ver" =~ d$ ]]
+    [[ "$ver" =~ \.dev[0-9]*$ ]]
 }
 
 # Strip the development suffix for numeric comparison
 strip_dev_suffix() {
     local ver="${1#v}"
-    echo "${ver%d}"
+    echo "${ver%%\.dev*}"
 }
 
 # Compare versions (returns 0 if v1 < v2, 1 otherwise)
-# Handles development builds: 0.1.0d sorts alongside 0.1.0
+# Handles development builds: 0.1.0.dev0 sorts alongside 0.1.0
 version_less_than() {
     local v1="$1"
     local v2="$2"
@@ -171,11 +171,11 @@ version_less_than() {
         return 1
     fi
     
-    # Strip 'd' suffix for numeric comparison
+    # Strip dev suffix for numeric comparison
     local v1_base=$(strip_dev_suffix "$v1")
     local v2_base=$(strip_dev_suffix "$v2")
     
-    # If bases are equal, dev < stable (0.1.0d < 0.1.0)
+    # If bases are equal, dev < stable (0.1.0.dev0 < 0.1.0)
     if [[ "$v1_base" == "$v2_base" ]]; then
         if is_dev_build "$v1" && ! is_dev_build "$v2"; then
             return 0  # dev < stable
@@ -206,15 +206,15 @@ get_latest_version() {
     while [[ $retry_count -lt $max_retries ]]; do
         if [[ "$DEV_CHANNEL" == "true" ]]; then
             # Fetch all releases (including pre-releases / dev builds)
-            # Pick the first one whose tag ends with 'd', or just the first one
+            # Pick the first one whose tag contains '.dev', or just the first one
             local all_releases
             all_releases=$(curl -s --connect-timeout 30 \
                 "https://api.github.com/repos/$QUICKBOT_GITHUB_REPO/releases?per_page=20" 2>/dev/null)
             
-            # Try to find a dev build first (tag ends with 'd')
+            # Try to find a dev build first (tag contains '.dev')
             latest_version=$(echo "$all_releases" | \
                 grep '"tag_name"' | sed -E 's/.*"tag_name"[[:space:]]*:[[:space:]]*"v?([^"]+)".*/\1/' | \
-                grep 'd$' | head -1)
+                grep '\.dev' | head -1)
             
             # If no dev build found, fall back to latest
             if [[ -z "$latest_version" ]]; then
@@ -563,7 +563,7 @@ update_scripts() {
 main() {
     echo ""
     echo "╔════════════════════════════════════════╗"
-    echo "║      QuickBot Updater v0.1.0d          ║"
+    echo "║      QuickBot Updater v0.1.0.dev0     ║"
     echo "╚════════════════════════════════════════╝"
     echo ""
     echo -e "${YELLOW}⚠  Development Beta — first public build of QuickBot.${NC}"

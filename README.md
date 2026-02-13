@@ -2,7 +2,7 @@
 
 Official installation scripts for [QuickBot](https://github.com/levinismynameirl/Quick-Bot).
 
-> **⚠️ Development Build (v0.1.0d)**
+> **⚠️ Development Build (v0.1.0.dev0)**
 > This is the first public release of QuickBot. This version is a **development beta** — features may be incomplete, config formats may change between releases, and things may break. Please [report issues](https://github.com/levinismynameirl/QuickBot-Installer/issues) if you run into problems.
 
 ## Quick Start
@@ -178,7 +178,7 @@ Or reinstall from scratch:
 
 ## Disclaimer
 
-QuickBot v0.1.0d is a **development beta** — the first public build. Installation scripts have been tested on macOS (Intel and Apple Silicon), but edge cases may exist. Config file formats may change between development releases. Back up `~/.config/.quickbot/data/` before running updates.
+QuickBot v0.1.0.dev0 is a **development beta** — the first public build. Installation scripts have been tested on macOS (Intel and Apple Silicon), but edge cases may exist. Config file formats may change between development releases. Back up `~/.config/.quickbot/data/` before running updates.
 
 ## Contributing
 

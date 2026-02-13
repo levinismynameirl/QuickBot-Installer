@@ -103,7 +103,7 @@ get_version_from_pyproject() {
     if [[ -f "$pyproject_file" ]]; then
         grep '^version = ' "$pyproject_file" | sed 's/version = "\(.*\)"/\1/' | tr -d '"'
     else
-        echo "0.1.0d"
+        echo "0.1.0.dev0"
     fi
 }
 
@@ -146,7 +146,7 @@ setup_directories() {
 generate_env_file() {
     log_info "Generating .env file..."
     
-    local version="0.1.0d"
+    local version="0.1.0.dev0"
     if command -v pipx &> /dev/null; then
         local detected_ver=$(pipx list 2>/dev/null | grep -A1 "quickbot" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
         [[ -n "$detected_ver" ]] && version="$detected_ver"
@@ -341,7 +341,7 @@ validate_installation() {
 main() {
     echo ""
     echo "╔════════════════════════════════════════╗"
-    echo "║   QuickBot Brew Installer v0.1.0d      ║"
+    echo "║  QuickBot Brew Installer v0.1.0.dev0  ║"
     echo "╚════════════════════════════════════════╝"
     echo ""
     echo -e "${YELLOW}⚠  Development Beta — first public build of QuickBot.${NC}"
@@ -380,7 +380,7 @@ main() {
     echo ""
     log_success "Installation complete!"
     echo ""
-    echo -e "${YELLOW}⚠  Development Beta (v0.1.0d) — first public build of QuickBot.${NC}"
+    echo -e "${YELLOW}⚠  Development Beta (v0.1.0.dev0) — first public build of QuickBot.${NC}"
     echo -e "${YELLOW}   Features may be incomplete. Config files may change between releases.${NC}"
     echo -e "${YELLOW}   Things may break. Please report issues at:${NC}"
     echo -e "${YELLOW}   https://github.com/levinismynameirl/Quick-Bot/issues${NC}"
