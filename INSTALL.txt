@@ -1,0 +1,50 @@
+QuickBot Installation Instructions
+====================================
+
+Welcome to QuickBot!
+
+⚠  DEVELOPMENT BETA (v0.1.0d)
+This is the first public release of QuickBot. This version is a development
+build — features may be incomplete, config file formats may change between
+releases, and things may break. Please report issues at:
+https://github.com/levinismynameirl/Quick-Bot/issues
+
+ONE-LINE INSTALLATION:
+----------------------
+Paste this into Terminal and press Enter:
+
+    curl -fsSL https://raw.githubusercontent.com/levinismynameirl/QuickBot-Installer/main/install.sh | bash
+
+That's it! No downloads, no GitHub, just this one command.
+It automatically downloads, checks dependencies, and installs everything.
+
+The installer will:
+  1. Check your system for required dependencies (Python 3.11+, Homebrew, pipx)
+  2. Install any missing dependencies (with your confirmation)
+  3. Set up QuickBot in your home directory (~/.quickbot)
+  4. Download and install the latest version from GitHub
+  5. Create the 'quick' and 'qw' commands for global use
+
+After installation, you can start using QuickBot by typing:
+
+    quick help
+
+For updates, run:
+
+    quick update
+
+or use the updater script directly:
+
+    ~/.quickbot/updater.sh
+
+To uninstall:
+
+    ~/.quickbot/uninstall.sh
+
+---
+
+Requirements:
+- macOS (Intel or Apple Silicon)
+- Internet connection for downloading QuickBot
+
+Questions or issues? Visit: https://github.com/levinismynameirl/Quick-Bot
